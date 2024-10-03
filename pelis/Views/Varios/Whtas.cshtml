@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Enviar mensaje a WhatsApp";
+}
+
+<h2>Enviar mensaje a WhatsApp</h2>
+
+@if (ViewBag.Error != null)
+{
+    <p style="color:red">@ViewBag.Error</p>
+}
+
+<form asp-action="Whtas" method="post">
+    <div>
+        <label for="phoneNumber">Número de celular:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Ej: 573001234567" required />
+    </div>
+    <br />
+    <button type="submit">Enviar</button>
+</form>
+
+@if (ViewBag.WhatsAppUrl != null)
+{
+    <br />
+    <a href="@ViewBag.WhatsAppUrl" target="_blank">Enviar mensaje por WhatsApp</a>
+}

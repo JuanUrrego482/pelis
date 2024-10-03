@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Pregunta de opción múltiple";
+}
+
+<h2>Pregunta: ¿Cuál es el color del cielo en un día despejado?</h2>
+
+<form asp-action="MostrarPregunta" method="post">
+    <div>
+        <input type="radio" id="opcion1" name="respuesta" value="opcion1" required>
+        <label for="opcion1">Rojo</label>
+    </div>
+    <div>
+        <input type="radio" id="opcion2" name="respuesta" value="opcion2">
+        <label for="opcion2">Azul</label>
+    </div>
+    <div>
+        <input type="radio" id="opcion3" name="respuesta" value="opcion3">
+        <label for="opcion3">Verde</label>
+    </div>
+    <div>
+        <input type="radio" id="opcion4" name="respuesta" value="opcion4">
+        <label for="opcion4">Amarillo</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enviar Respuesta</button>
+</form>

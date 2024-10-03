@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Resultado";
+}
+
+<h2>Resultado</h2>
+
+<p>Nombre: @ViewBag.Nombre</p>
+<p>Fecha de nacimiento: @ViewBag.FechaNacimiento</p>
+
+<div class="form-group">
+    <input type="checkbox" disabled="disabled" @(ViewBag.PuedeVotar ? "checked" : "") />
+    <label>Puede votar</label>
+</div>
+
+<a asp-action="Crear" class="btn btn-secondary">Regresar</a>

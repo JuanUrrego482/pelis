@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Inicio de sesion:";
+}
+
+<h2>Inicio de sesion</h2>
+
+<form method="post">
+    <label for="username">Usuario:</label>
+    <input type="text" id="username" value="@ViewBag.username" required />
+
+    <label for="password">Clave:</label>
+    <input type="password" id="password" value="@ViewBag.password" required />
+
+    <button type="submit">Enviar</button>
+</form>
+
+
+@if (@ViewBag.username != "usuario12" || @ViewBag.password != "1234")
+{
+    <p>Usuario o contraseña invalidos</p>
+}

@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Sumar dos números";
+}
+
+<h2>Sumar dos números</h2>
+
+<!-- Formulario para enviar los números al controlador -->
+<form method="post">
+    <label for="num1">Número 1:</label>
+    <input type="number" name="num1" value="@ViewBag.num1" />
+    <br />
+    <label for="num2">Número 2:</label>
+    <input type="number" name="num2" value="@ViewBag.num2" />
+    <br />
+    <input type="submit" value="Sumar" />
+</form>
+
+<!-- Mostrar el resultado solo si está presente -->
+@if (ViewBag.Resultado != null)
+{
+    <p>Resultado: @ViewBag.Resultado</p>
+}

@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Resultado";
+}
+
+<h2>Resultado</h2>
+
+@if (ViewBag.EsCorrecta)
+{
+    <p>¡Correcto! La respuesta es azul.</p>
+}
+else
+{
+    <p>Incorrecto. La respuesta correcta es azul.</p>
+}
+
+<a asp-action="MostrarPregunta" class="btn btn-secondary">Intentar de nuevo</a>
