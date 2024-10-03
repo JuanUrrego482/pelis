@@ -47,7 +47,12 @@ namespace pelis.Controllers
             else
             {
 
+
+
             }
+
+
+
             return View();
 
         }
@@ -55,10 +60,9 @@ namespace pelis.Controllers
 
         public IActionResult Crear()
         {
-            return View();  // Esto debería cargar la vista Crear.cshtml
+            return View();
         }
 
-        // Acción POST para procesar el formulario
         [HttpPost]
         public IActionResult Crear(string nombre, DateTime fechaNacimiento)
         {
@@ -75,32 +79,67 @@ namespace pelis.Controllers
         }
 
 
-        // Acción GET para mostrar el formulario
         [HttpGet]
         public IActionResult MostrarPregunta()
         {
             return View();
         }
 
-        // Acción POST para procesar la respuesta
         [HttpPost]
         public IActionResult MostrarPregunta(string respuesta)
         {
-            // Definimos la respuesta correcta
             string respuestaCorrecta = "opcion2";
 
-            // Verificar si la respuesta es correcta o incorrecta
             bool esCorrecta = respuesta == respuestaCorrecta;
 
-            // Pasamos el resultado a la vista
             ViewBag.EsCorrecta = esCorrecta;
 
             return View("Resultado2");
         }
 
 
+        [HttpGet]
+        public IActionResult EnviarCorreo()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EnviarCorreo(string toEmail, string subject, string body)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var smtpClient = new SmtpClient("smtp.gmail.com")
+                    {
+                        Port = 587,
+                        Credentials = new NetworkCredential("juan.urrego482@pascualbravo.com", "haauxvitanmvxfsn"), // Cambia por tus credenciales
+                        EnableSsl = true,
+                    };
 
 
+                    var mailMessage = new MailMessage
+                    {
+                        From = new MailAddress("juan.urrego482@pascualbravo.com"),
+                        Subject = subject,
+                        Body = body,
+                        IsBodyHtml = true,
+                    };
+
+                    mailMessage.To.Add(toEmail);
+
+                    await smtpClient.SendMailAsync(mailMessage);
+
+                    ViewBag.Message = "Correo enviado exitosamente.";
+                }
+                catch (SmtpException ex)
+                {
+                    ViewBag.Message = $"Error al enviar correo: {ex.Message}";
+                }
+            }
+            return View();
+        }
 
         [HttpGet]
         public IActionResult Whtas()
@@ -113,20 +152,18 @@ namespace pelis.Controllers
         {
             if (string.IsNullOrEmpty(phoneNumber))
             {
-                // Si el número es nulo o vacío, regresar la vista con un error.
                 ViewBag.Error = "Por favor ingrese un número de teléfono válido.";
                 return View("Whtas");
             }
 
-            // Construir la URL de WhatsApp con el número de teléfono
             string whatsappUrl = $"https://wa.me/{phoneNumber}";
             ViewBag.WhatsAppUrl = whatsappUrl;
 
             return View("Whtas");
         }
 
-        private const string ValidUsername = "usuario";  // Puedes cambiar el usuario válido
-        private const string ValidPassword = "12345";    // Puedes cambiar la contraseña válida
+        private const string ValidUsername = "usuario";
+        private const string ValidPassword = "12345";
 
         [HttpGet]
         public IActionResult Users()
@@ -150,59 +187,6 @@ namespace pelis.Controllers
         }
 
 
-
-
-        private readonly IConfiguration _configuration;
-
-        public VariosController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
-        [HttpGet]
-        public IActionResult EnviarCorreo()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EnviarCorreo(string toEmail, string subject, string body)
-        {
-            if (string.IsNullOrEmpty(toEmail) || string.IsNullOrEmpty(subject) || string.IsNullOrEmpty(body))
-            {
-                ViewBag.Message = "Por favor, complete todos los campos.";
-                return View("EnviarCorreo");
-            }
-
-            try
-            {
-                using (SmtpClient smtpClient = new SmtpClient())
-                {
-                    smtpClient.Host = "smtp.tuservidor.com";
-                    smtpClient.Port = 587;  // O el puerto que corresponda
-                    smtpClient.EnableSsl = true;
-                    smtpClient.Credentials = new NetworkCredential("tuusuario@tuservidor.com", "tucontraseña");
-
-                    MailMessage mailMessage = new MailMessage();
-                    mailMessage.From = new MailAddress("tuusuario@tuservidor.com");
-                    mailMessage.To.Add("destinatario@dominio.com");
-                    mailMessage.Subject = "Asunto del correo";
-                    mailMessage.Body = "Contenido del correo";
-
-                    try
-                    {
-                        await smtpClient.SendMailAsync(mailMessage);
-                        ViewBag.Message = "Correo enviado exitosamente.";
-                    }
-                    catch (Exception ex)
-                    {
-                        ViewBag.Message = $"Error al enviar el correo: {ex.Message}";
-                    }
-
-                }
-                return View("EnviarCorreo");
-            }
-        }
     }
 }
-    
+

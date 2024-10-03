@@ -1,29 +1,29 @@
 ﻿@{
-    ViewData["Title"] = "Enviar correo";
+    ViewData["Title"] = "Enviar Correo";
 }
 
-<h2>Enviar un correo</h2>
-
-@if (ViewBag.Message != null)
-{
-    <p>@ViewBag.Message</p>
-}
+<h2>Enviar Correo</h2>
 
 <form asp-action="EnviarCorreo" method="post">
-    <div>
-        <label for="toEmail">Correo destino:</label>
-        <input type="email" id="toEmail" name="toEmail" placeholder="Ej: correo@dominio.com" required />
+    <div class="form-group">
+        <label for="toEmail">Correo destino</label>
+        <input type="email" class="form-control" id="toEmail" name="toEmail" placeholder="example@domain.com" required>
     </div>
-    <br />
-    <div>
-        <label for="subject">Asunto:</label>
-        <input type="text" id="subject" name="subject" required />
+    <div class="form-group">
+        <label for="subject">Asunto</label>
+        <input type="text" class="form-control" id="subject" name="subject" required>
     </div>
-    <br />
-    <div>
-        <label for="body">Mensaje:</label>
-        <textarea id="body" name="body" rows="5" required></textarea>
+    <div class="form-group">
+        <label for="body">Mensaje</label>
+        <textarea class="form-control" id="body" name="body" rows="5" required></textarea>
     </div>
-    <br />
-    <button type="submit">Enviar</button>
+    <button type="submit" class="btn btn-primary">Enviar</button>
 </form>
+
+@if (ViewBag.Message != null)
+
+{
+    <div class="alert alert-info mt-3">
+        @ViewBag.Message
+    </div>
+}
